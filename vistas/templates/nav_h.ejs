@@ -1,11 +1,11 @@
 <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-    <a class="navbar-brand col-md-1 col-lg-2 me-0 px-2 text-center" href="#"><%= sesion.usuario %> </a>
+    <a class="navbar-brand col-md-1 col-lg-2 me-0 px-2 text-center" href="#"><%= `${sesion.name} ${sesion.lastname}` %> </a>
     <img src="/images/logo.png" class="img-fluid">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <input class="form-control form-control-dark w-50" type="text" placeholder="Buscar" aria-label="Search">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Historial</button>&nbsp;&nbsp;&nbsp;&nbsp;
-      <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Añadir</button>&nbsp;&nbsp;&nbsp;&nbsp;
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit"> <%= sesion.enable==1 ? 'Iniciar ': 'Cerrar '  %>Sesión  </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <button class="btn btn-outline-primary my-2 my-sm-0" type="submit" style=<%= sesion.nav_h.b1%> >Historial</button>&nbsp;&nbsp;&nbsp;&nbsp;
+      <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit"><%= sesion.nav_h.b2%></button>&nbsp;&nbsp;&nbsp;&nbsp;
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit"> <%= sesion.enable ? 'Cerrar ': 'Iniciar '  %>Sesión  </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </header>
