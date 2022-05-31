@@ -1,5 +1,6 @@
 const express=require('express')
 const body=require('body-parser')
+const session=require('express-session')
 const app=express()
 const port=80
 
@@ -15,7 +16,17 @@ app.set('view engine', 'ejs')
 app.set('views', `${__dirname}/vistas`)
 
 //3.- Ruteo
+app.use(session({
+    secret:'first session',
+    saveUninitialized:true,
+    resave:true,
+    cookie:{
+        maxAge:60000
+    }
+}))
+
 app.use('/login', require('./rutas/login.js'))
+app.use('/', require('./rutas/root.js'))
 //app.use('/admin','./usuarios/admin.js')
 
 //4.- Estados

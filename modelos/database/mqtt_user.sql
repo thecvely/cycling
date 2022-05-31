@@ -34,12 +34,18 @@ USE CICLISMO;
 CREATE TABLE `mqtt_user` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `username` varchar(100) DEFAULT NULL,
+  `name` varchar(100) DEFAULT NULL,
+  `lastname` varchar(100) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
   `password` varchar(100) DEFAULT NULL,
   `salt` varchar(35) DEFAULT NULL,
   `is_superuser` tinyint(1) DEFAULT 0,
-  `created` datetime DEFAULT NULL,
+  `enable` int(1) unsigned NOT NULL,
+  `code` varchar(7) DEFAULT NULL,
+  `created` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `mqtt_username` (`username`)
+  UNIQUE KEY `mqtt_username` (`username`),
+  UNIQUE KEY `mqtt_mail` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
@@ -48,7 +54,8 @@ VALUES
 	('mcorella', '[saltpassword cifrado sha256]', NULL);
 
 
-
+--enable 0: Usuario no verificado | 1 Usuario activado | 2 Usuario deshabilitado
+--code --> almacena el código de verificación
 
 
 

@@ -1,0 +1,104 @@
+<%- include ('../templates/header.ejs', {titulo:'Registrar'})  %>
+
+<div>
+    <br><br><br><br><br><br>
+</div>
+
+<div id="app">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                
+            </div>
+            <div class="col-7 text-center">
+                <img src="http://fresvel.com/images/logom.png" alt="">
+                <h2>Registrar Nuevo Usuario</h2>
+            </div>
+            <div class="col">
+                
+            </div>
+        </div>
+        <div class="row">
+            
+            <div class="col">
+                
+            </div>
+            <div class="col-7">
+                <form action="#" method="post">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1"> Nombres :</span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Nombres" aria-label="Username" aria-describedby="basic-addon1" name="name" required>
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1"> Apellidos :</span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Apellidos" aria-label="Username" aria-describedby="basic-addon1" name="lastname" required>
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1"> Correo Electrónico :</span>
+                    </div>
+                    <input type="email" class="form-control" placeholder="e-mail" aria-label="Username" aria-describedby="basic-addon1" name="email" required>
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1"> Nombre de Usuario :</span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Nombre de Usuario" aria-label="Username" aria-describedby="basic-addon1" name="username" required>
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1"> Contraseña :</span>
+                    </div>
+                    <input type="password" class="form-control" placeholder="Contraseña" aria-label="Username" aria-describedby="basic-addon1" name="passwd" required>
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1"> Confirmar Contraseña :</span>
+                    </div>
+                    <input type="password" class="form-control" placeholder="Contraseña" aria-label="Username" aria-describedby="basic-addon1" name="passwd" required>
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1"> Tipo :</span>
+                    </div>
+                    <select class="form-control" name="is_superuser" required>
+                        <option selected value="0">Tipo</option>
+                        <option value="1">Administrador</option>
+                        <option value="0">Supervisor</option>
+                    </select>
+                </div>
+                <input type="hidden" name="code" value="0">
+                <div class="container">
+                  <div class="row">
+                    <div class="col">
+                        
+                    </div>
+                    <div class="col-5">
+                        <div class="input-group">
+                            <button type="submit" class="btn btn-outline-success form-control">Registrar</button>    
+                        </div>
+                    </div>
+                    <div class="col">
+                        
+                    </div>
+                  </div>  
+                </div>
+            </form>
+                
+                  
+            </div>
+            <div class="col">
+                
+            </div>
+            
+        </div>
+    </div>
+
+
+</div>
+
+<%- include ('../templates/footer.ejs') %> 

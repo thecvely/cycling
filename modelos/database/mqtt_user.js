@@ -3,6 +3,9 @@ const mysql=require('mysql')
 
 const tb_user={
     id:'',
+    name:'',
+    lastname:'',
+    email:'',
     username:'',
     password:'',
     salt:'',
@@ -26,4 +29,4 @@ pool.getConnection((err, con)=>{
     }
 })
 
-module.exports={tb_user}
+module.exports={tb_user, pool}
