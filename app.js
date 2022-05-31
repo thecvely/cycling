@@ -3,6 +3,10 @@ const body=require('body-parser')
 const session=require('express-session')
 const app=express()
 const port=80
+const {database}=require('./modelos/database/mqtt_user.js')
+const MysqlSession=require('express-mysql-session')
+
+const mysqlStore=new MysqlSession(database)
 
 //3.1  Peticiones Post
 app.use(body.urlencoded({extended:false}))
@@ -15,9 +19,11 @@ app.use(express.static(`${__dirname}/public`))
 app.set('view engine', 'ejs')
 app.set('views', `${__dirname}/vistas`)
 
-//3.- Ruteo
+//3.- Ruteo y cokies
 app.use(session({
+    key:'id_usuario',
     secret:'first session',
+    store: mysqlStore,
     saveUninitialized:true,
     resave:true,
     cookie:{

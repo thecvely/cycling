@@ -29,4 +29,4 @@ pool.getConnection((err, con)=>{
     }
 })
 
-module.exports={tb_user, pool}
+module.exports={tb_user, pool, database}

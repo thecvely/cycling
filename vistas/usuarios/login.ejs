@@ -1,0 +1,70 @@
+<%- include ('../templates/header.ejs', {titulo:'Iniciar Sesión', sesion:{enable:'0', usuario:'mcorella'}})  %>
+
+<div>
+    <br><br><br><br><br><br>
+</div>
+
+<div id="app">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                
+            </div>
+            <div class="col-7 text-center">
+                <img src="images/logom.png" alt="">
+                <h2>Iniciar Sesión</h2>
+                <span class="<%= error.class%>" id="basic-addon1"> <%= error.data%> </span><br><br> 
+            </div>
+            <div class="col">
+                
+            </div>
+        </div>
+        <div class="row">
+            
+            <div class="col">
+                
+            </div>
+            <div class="col-7">
+                <form action="login" method="post">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend"> 
+                      <span class="input-group-text" id="basic-addon1"> Usuario </span>
+                    </div>
+                    <input type="text" class="form-control " placeholder="Ingrese nombre de usuario" aria-label="Username" aria-describedby="basic-addon1" name="username">
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend"> 
+                      <span class="input-group-text" id="basic-addon1">Contraseña</span>
+                    </div>
+                    <input type="password" class="form-control" placeholder="Ingrese contraseña" aria-label="Username" aria-describedby="basic-addon1" name="password">
+                </div>
+
+                <div class="container">
+                  <div class="row">
+                    <div class="col">
+                        
+                    </div>
+                    <div class="col-5">
+                        <div class="input-group">
+                            <button type="submit" class="btn btn-outline-success form-control">Iniciar Sesión</button>    
+                        </div>
+                    </div>
+                    <div class="col">
+                    </div>
+                  </div>  
+                </div>
+            </form>
+                
+                  
+            </div>
+            <div class="col">
+                
+            </div>
+            
+        </div>
+    </div>
+
+
+</div>
+
+<%- include ('../templates/footer.ejs') %> 

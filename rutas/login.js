@@ -12,6 +12,39 @@ router.get('/registro', (req, res)=>{
 })
 
 
+router.post('/', (req, res)=>{
+    const data=Object.assign({}, req.body)
+    pool.query(`SELECT password, salt FROM mqtt_user WHERE username ='${data.username}'`, (err, response)=>{
+        if(err){
+            res.send(`Error: ${err}`)
+        }else{
+            if(response.length===1){
+                const hash=sha256.createHash('sha256').update(`${response[0].salt}${data.password}`).digest('hex')
+                if(hash===response[0].password){
+                    req.session.login=true
+                    res.render('usuarios/inicio.ejs')
+                }else{
+                    const error={
+                        class:'text-center form-control is-invalid',
+                        data:'Credenciales Incorrectas'
+                    }
+                    res.render('usuarios/login.ejs', {error})
+                }
+            }else{
+                const error={
+                    class:'text-center form-control is-invalid',
+                    data:'Credenciales Incorrectas'
+                }
+                res.render('usuarios/login.ejs', {error})
+
+            }
+
+        }
+    })
+})
+
+
+
 router.post('/registro', (req, res)=>{
     const data=Object.assign({},req.body)
     data.salt='$3cr3t'
