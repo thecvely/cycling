@@ -1,4 +1,4 @@
-<%- include ('../templates/header.ejs', {titulo:'Registrar'})  %>
+<%- include ('../templates/header.ejs', {titulo:'Activar Cuenta'},  error,sesion ) %>
 
 <div>
     <br><br><br><br><br><br>
@@ -13,8 +13,8 @@
             <div class="col-7 text-center">
                 <img src="images/logom.png" alt="">
                 <h2>Activar Usuario</h2>
-                <span class="text-center"> <%= `${data.name} ${data.lastname}` %> </span><br>
-                <span class="text-center" id="basic-addon1"> Ingrese el código de confirmación enviado al correo <%= data.email %> . </span><br><br>
+                <span class="text-center"> <%= `${sesion.name} ${sesion.lastname}` %> </span><br>
+                <span class="text-center" id="basic-addon1"> Ingrese el código de confirmación enviado al correo <%= sesion.email %> . </span><br><br>
                 <span class="<%= error.class%>" id="basic-addon1"> <%= error.data%> </span><br><br> 
             </div>
             <div class="col">
@@ -32,7 +32,7 @@
                     <div class="input-group-prepend"> 
                       <span class="input-group-text" id="basic-addon1">Código de Activación </span>
                     </div>
-                    <input type="text" class="form-control" placeholder="Ingrese el código enviado al correo" aria-label="Username" aria-describedby="basic-addon1" name="code">
+                    <input type="text" class="form-control" placeholder="Ingrese el código enviado al correo" aria-label="Username" aria-describedby="basic-addon1" name="code" required>
                 </div>
 
                 <div class="container">
@@ -46,9 +46,9 @@
                         </div>
                     </div>
                     <div class="col">
-                        <input type="hidden" name="name" value="<%= data.name%> ">
-                        <input type="hidden" name="lastname" value="<%= data.lastname%> ">
-                        <input type="hidden" name="username" value="<%= data.username%> ">
+                        <input type="hidden" name="name" value="<%= sesion.name%> ">
+                        <input type="hidden" name="lastname" value="<%= sesion.lastname%> ">
+                        <input type="hidden" name="username" value="<%= sesion.username%> ">
                     </div>
                   </div>  
                 </div>

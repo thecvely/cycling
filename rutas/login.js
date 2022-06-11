@@ -5,49 +5,116 @@ const sha256=require('crypto')
 const router=express.Router()
 const {pool}=require('../modelos/database/mqtt_user.js')
 const {tb_user}=require('../modelos/database/mqtt_user.js')
+const {sesionControl}=require('../funciones/session.js')
 
-router.get('/registro', (req, res)=>{
-    const data=Object.assign({}, req.body)
-    res.render('usuarios/registro.ejs')
+
+const mail=require('nodemailer')
+
+function sendMail(mensaje ){
+console.log('*************************************************************************')
+console.log(`ENVIANDO CORREO!`)
+const transporter=mail.createTransport({
+    service:'gmail',
+    auth:{
+        user:'vehoja@gmail.com',
+        pass:'gdzgoihtciqnrnda'
+    }
+})
+
+console.log(`ENVIANDO CORREO! 2`)
+
+let mailOptions={
+    from:'vehoja@gmail.com',
+    to:'thecvely@gmail.com',
+    subject:'Código de Activación',
+    text:mensaje
+}
+
+console.log(`ENVIANDO CORREO! 3`)
+
+transporter.sendMail(mailOptions,(err,info)=>{
+
+    console.log(`SEND MAIL`)
+    if(err){
+        console.log('ERROR EN ENVÍO')
+        console.log(err)
+    }else{
+        console.log('ENVÍO DE CORREO OK')
+        console.log(info.response)
+    }
+    console.log(`FIN SEND MAIL`)
+})
+
+}
+
+
+const error={
+    class:'',
+    data:''
+}
+
+router.get('/registro', (req, res)=>{ // Abierto, todos pueden acceder
+    const data=Object.assign({}, req.body)    
+    const login=sesionControl(req.session)
+    const sesion=Object.assign({},login)
+    console.log(req.session)
+    res.render('usuarios/registro.ejs', {error, sesion})
 })
 
 
-router.post('/', (req, res)=>{
+router.post('/', (req, res)=>{ //Página de autenticación, todos pueden acceder
+
     const data=Object.assign({}, req.body)
-    pool.query(`SELECT password, salt FROM mqtt_user WHERE username ='${data.username}'`, (err, response)=>{
-        if(err){
-            res.send(`Error: ${err}`)
+    pool.query(`SELECT username, name, lastname, password, salt, email, enable FROM mqtt_user WHERE username ='${data.username}'`, (err, response)=>{
+        if(err || response.length===0){
+                error.class='text-center form-control is-invalid'
+                error.data=`Credenciales Incorrectas ${err}`
+                const login=sesionControl(req.session)
+                const sesion=Object.assign({},login)
+                res.render('usuarios/login.ejs', {error, sesion})
         }else{
-            if(response.length===1){
                 const hash=sha256.createHash('sha256').update(`${response[0].salt}${data.password}`).digest('hex')
                 if(hash===response[0].password){
                     req.session.login=true
-                    res.render('usuarios/inicio.ejs')
+                    req.session.setvar=true
+                    req.session.name=response[0].name
+                    req.session.username=response[0].username
+                    req.session.lastname=response[0].lastname
+                    req.session.email=response[0].email
+                    
+                    const sesion=Object.assign({}, req.session)
+                    res.render('usuarios/inicio.ejs', {error, sesion})
                 }else{
-                    const error={
-                        class:'text-center form-control is-invalid',
-                        data:'Credenciales Incorrectas'
-                    }
-                    res.render('usuarios/login.ejs', {error})
+                    error.class='text-center form-control is-invalid',
+                    error.data='Credenciales Incorrectas'
+                    const login=sesionControl(req.session)
+                    const sesion=Object.assign({},login)
+                    res.render('usuarios/login.ejs', {error, sesion})
                 }
-            }else{
-                const error={
-                    class:'text-center form-control is-invalid',
-                    data:'Credenciales Incorrectas'
-                }
-                res.render('usuarios/login.ejs', {error})
-
-            }
-
         }
     })
 })
 
 
 
-router.post('/registro', (req, res)=>{
+router.post('/registro', (req, res)=>{ //Cualquiera puede registarse -- si es de sesión iniciada es añadir 
     const data=Object.assign({},req.body)
-    data.salt='$3cr3t'
+    data.salt=process.env.DB_SALT
+    console.log(data.code)
+    req.session.data={
+        name:'',
+        username:'',
+        lastname:'',
+        email:'',
+        nav_h:{
+            b1:'',
+            b2:''
+        },
+        enable:''
+    }
+
+    console.log(req.session)
+
 if (data.code==='0'){//REGISTRO DE USUARIO
     console.log(data)
     if (data.passwd[0]===data.passwd[1] && data.passwd[0]!=0 ){
@@ -67,9 +134,20 @@ if (data.code==='0'){//REGISTRO DE USUARIO
                 console.log('Error')
                 res.send(`Error en base de datos:${err}`)
             }else{           
-
-            console.log("Guardado en base de datos")
-            res.render('usuarios/activar.ejs', {data, error:''})
+                
+                req.session.login=false
+                req.session.setvar=true
+                req.session.username=data.username
+                req.session.lastname=data.lastname
+                req.session.email=data.email
+                req.session.name=data.name
+                
+                //sendMail(`${data.code}`)
+                const login=sesionControl(req.session)
+                const sesion=Object.assign({},login)                
+                console.log("Guardado en base de datos")
+                
+                res.render('usuarios/activar.ejs', {error, sesion})
             }
         })
        
@@ -79,24 +157,24 @@ if (data.code==='0'){//REGISTRO DE USUARIO
 }else{// ACTIVACIÓN DE USUARIO
     pool.query(`SELECT code FROM mqtt_user WHERE username='${data.username}'`, (err, result)=>{
         if(err){
-
+            res.send(`Error: ${err}`)
         }else{
             console.log(result[0].code)
             console.log(data.code)
             if (result[0].code.localeCompare(data.code)===0){
-                
-                
-                
-                res.send('Usuario Activado')
+                req.session.login=true
 
+                const login=sesionControl(req.session)
+                const sesion=Object.assign({}, login)             
+                console.log(`Valor de Sesion: ${sesion}`)
+                res.render('usuarios/inicio.ejs', {sesion})
             }else{
-                error={
-                data:' Código incorrecto intente nuevamente',
-                class:'text-center form-control is-invalid'
-                }
-                res.render('usuarios/activar.ejs', {data, error})
+                const login=sesionControl(req.session)
+                const sesion=Object.assign({}, login)
+                error.data=' Código incorrecto intente nuevamente'
+                error.class='text-center form-control is-invalid'
+                res.render('usuarios/activar.ejs', {data, error, sesion})
             }
-            
         }  
     })
 

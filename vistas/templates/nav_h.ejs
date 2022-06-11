@@ -5,7 +5,7 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <input class="form-control form-control-dark w-50" type="text" placeholder="Buscar" aria-label="Search">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <button class="btn btn-outline-primary my-2 my-sm-0" type="submit" style=<%= sesion.nav_h.b1%> >Historial</button>&nbsp;&nbsp;&nbsp;&nbsp;
-      <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit"><%= sesion.nav_h.b2%></button>&nbsp;&nbsp;&nbsp;&nbsp;
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit"> <%= sesion.enable ? 'Cerrar ': 'Iniciar '  %>Sesión  </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a class="<%= sesion.nav_h.B1.class%>"  type="submit" style="<%= sesion.nav_h.B1.style%>" href="<%= sesion.nav_h.B1.href%>"> <%= sesion.nav_h.B1.name%></a>&nbsp;&nbsp;&nbsp;&nbsp;
+      <a class="<%= sesion.nav_h.B2.class%>"  type="submit" style="<%= sesion.nav_h.B2.style%>" href="<%= sesion.nav_h.B2.href%>"> <%= sesion.nav_h.B2.name%></a>&nbsp;&nbsp;&nbsp;&nbsp;
+      <a class="<%= sesion.nav_h.B3.class%>"  type="submit" style="<%= sesion.nav_h.B3.style%>" href="<%= sesion.nav_h.B3.href%>"> <%= sesion.nav_h.B3.name%></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </header>
